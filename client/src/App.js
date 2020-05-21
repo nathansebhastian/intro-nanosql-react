@@ -2,6 +2,8 @@ import React from 'react'
 import Axios from 'axios'
 import {nSQL} from '@nano-sql/core'
 
+const API_URL = 'http://localhost:5000/'
+
 class App extends React.Component {
 
   state = {
@@ -12,7 +14,7 @@ class App extends React.Component {
   }
 
   getMerchant = () => {
-    Axios.get('/get')
+    Axios.get(`${API_URL}get`)
     .then(res => {
       this.setState({users: res.data});
     });
@@ -21,7 +23,7 @@ class App extends React.Component {
   handleDelete = () => {
     let id = prompt('Enter user id');
     if (id){
-      Axios.delete(`/delete/${id}`)
+      Axios.delete(`${API_URL}delete/${id}`)
       .then(response => {
         alert(response.data.message)
         this.getMerchant()
@@ -33,8 +35,8 @@ class App extends React.Component {
     this.getMerchant()
 
     nSQL().createDatabase({
-      mode: "LS",
       id: "ls-db",
+      mode: "LS",
       tables: [
         {
           name: "tb_temp",
@@ -79,7 +81,7 @@ class App extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const {name, age, role} = this.state
-    Axios.post('/save', {
+    Axios.post(`${API_URL}/save`, {
       name,
       age,
       role
