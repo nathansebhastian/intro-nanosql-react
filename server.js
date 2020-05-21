@@ -1,11 +1,9 @@
 const express = require('express');
-const bodyParser = require("body-parser");
-const app = express();
 const { nSQL } = require("@nano-sql/core");
 const { MySQL } = require("@nano-sql/adapter-mysql");
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+const app = express();
+app.use(express.json())
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
@@ -14,7 +12,7 @@ app.listen(PORT, () => {
 
 nSQL().createDatabase({
   id: "mysql-db",
-  mode: new MySQL({ // required
+  mode: new MySQL({
     host: "localhost",
     database: "test",
     user: "root",
